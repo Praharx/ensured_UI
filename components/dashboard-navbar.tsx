@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Input } from '@/components/ui/input';
 
-import { UserAccountNav } from '@/components/user-account-nav';
+// import { UserAccountNav } from '@/components/user-account-nav';
 import Link from 'next/link';
 import { Package2, Search, Settings, Menu } from 'lucide-react';
 import { usePathname } from 'next/navigation';
@@ -120,7 +120,7 @@ export function Navbar({
           className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px]"
         />
       </div>
-      <UserAccountNav user={userDetails} />
+      {/* <UserAccountNav user={userDetails} /> */}
     </header>
   );
 }
