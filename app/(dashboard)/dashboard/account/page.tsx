@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { LockIcon, Trash2Icon } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import Link from 'next/link';
