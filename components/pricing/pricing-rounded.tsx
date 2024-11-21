@@ -17,6 +17,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { Moon } from 'lucide-react';
 import pricingPlans from '@/config/pricing';
 import { dummyPricing } from '@/config/pricing';
+import { useToast } from '../ui/use-toast';
 
 type Subscription = Tables<'subscriptions'>;
 type Product = Tables<'products'>;
@@ -52,6 +53,7 @@ export default function PricingRounded({
     )
   );
   const router = useRouter();
+  const {toast} = useToast()
   const [billingInterval, setBillingInterval] =
     useState<BillingInterval>('month');
   const [priceIdLoading, setPriceIdLoading] = useState<string>();
@@ -119,94 +121,43 @@ export default function PricingRounded({
       <section className="container mx-auto" id="pricing">
         <div className="flex flex-col items-center justify-center w-full min-h-screen py-10 ">
           <h1 className="text-3xl font-bold text-center">
-            Flat pricing, no management fees.
+            PRICING
           </h1>
-          <p className="mt-2 text-center text-muted-foreground">
-            Whether you're one person trying to get ahead or a big firm trying
-            to take over the world, we've got a plan for you.
+          <span className="-mt-1 text-2xl font-bold text-center">coz builders are broke</span>
+          <p className="mt-2 text-center text-muted-foreground mb-4">
+            Not charging much but just little enough to keep us afloat:))
           </p>
-          {displayProducts.length === 0 && (
-            <p className="mt-4 text-center text-red-500">
-              Note: This is dummy pricing data. Please add your own pricing data in the Stripe Dashboard to see actual plans. Alternatively, you may use the Stripe Fixtures command to create your own pricing data, see <a href="https://hikari.antoineross.com/docs/configure/stripe/local" className="underline" target="_blank" rel="noopener noreferrer">documentation</a>.
-            </p>
-          )}
-          <div className="flex items-center justify-center mt-6 space-x-4">
-            <Button
-              className="rounded-4xl"
-              variant={billingInterval === 'month' ? 'default' : 'outline'}
-              onClick={() => setBillingInterval('month')}
-            >
-              Monthly
-            </Button>
-            <Button
-              className="rounded-4xl"
-              variant={billingInterval === 'year' ? 'default' : 'outline'}
-              onClick={() => setBillingInterval('year')}
-            >
-              Yearly
-            </Button>
-          </div>
-          <div className="grid gap-6 mt-10 md:grid-cols-3">
-            {displayProducts.map((product) => {
-              const price = product?.prices?.find(
-                (price) => price.interval === billingInterval
-              );
-              if (!price) return null;
-              const priceString = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: price.currency!,
-                minimumFractionDigits: 0
-              }).format((price?.unit_amount || 0) / 100);
-              const isActive = subscription
-                ? product.name === subscription?.prices?.products?.name
-                : false;
-              const cardBgColor = isActive
-                ? 'border-black bg-white text-black'
-                : 'bg-white text-black';
+          <Card className="w-full max-w-md mb-2">
+            <CardHeader>
+              <CardTitle>Solana Address</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col items-center space-y-4">
+                <div className="flex items-center space-x-2 ">
+                  <div className="text-lg font-medium mt-2">GnKxPb5...fsPipHT</div>
+                  <svg 
+                    onClick={() => {
+                      navigator.clipboard.writeText('GnKxPb5MBsFysJFVVM5xbyo2WD9DNRvmL2vThfsPipHT').then(() => {
+                        // Trigger a sonar or feedback here
+                        toast({
+                          title: "Copied to clipboard successfully!",
+                          description: "you can pay now!",
+                        })
+                        console.log('Copied to clipboard successfully!');
+                      });
+                    }}
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                  </svg>
 
-              // Use features from the pricingPlans config
-              const plan = pricingPlans.find(
-                (plan) => plan.name === product.name
-              );
-              const features = plan ? plan.features : [];
-
-              return (
-                <Card
-                  key={product.id}
-                  className={`w-full max-w-sm rounded-4xl border-2 ${cardBgColor}`}
-                >
-                  <CardHeader className="rounded-t-4xl flex flex-col justify-center">
-                    <div className="flex items-center">
-                      <Moon className="h-8 w-8 text-gray-600 fill-zinc-500" />
-                      <CardTitle className="ml-2 text-2xl font-bold">{product.name}</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-4xl font-bold py-8">{priceString}</div>
-                    <p className="mt-2 text-muted-foreground">
-                      {product.description}
-                    </p>
-                    <Button
-                      variant="default"
-                      type="button"
-                      onClick={() => handleStripeCheckout(price)}
-                      className="mt-4 w-full rounded-4xl"
-                    >
-                      {subscription ? 'Manage' : 'Subscribe'}
-                    </Button>
-                    <ul className="mt-4 space-y-2">
-                      {features.map((feature, index) => (
-                        <li key={index} className="flex items-center space-x-2">
-                          <CheckIcon className="text-blue-500" />
-                          <span>{feature.trim()}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+                </div>
+                <div className="w-32 h-32 bg-gray-200 rounded-md">
+                  <img src="/sol_scan.png" alt="solana" className="w-full h-full object-contain" />
+                </div>
+                <div className="text-lg font-medium mt-2">Amount: 10 USDC</div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     );

@@ -5,19 +5,19 @@ import { cn } from '@/lib/utils';
 import { buttonVariants } from '@/components/ui/button';
 import { Star } from 'lucide-react';
 import Particles from '@/components/magicui/particles';
+import axios from 'axios'
 import Ripple from '@/components/magicui/ripple';
 import AnimatedGradientText from '@/components/magicui/animated-shiny-text';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
-import AvatarCircles from '@/components/magicui/avatar-circles';
 import { useTheme } from 'next-themes';
+import { useToast } from '../ui/use-toast';
+
 import { useState, useEffect, useRef } from 'react';
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger
@@ -25,46 +25,8 @@ import {
 
 export default function HeroSection() {
   const { theme } = useTheme();
-  const avatarUrls = [
-    'https://avatars.githubusercontent.com/u/16860528',
-    'https://avatars.githubusercontent.com/u/20110627',
-    'https://avatars.githubusercontent.com/u/106103625',
-    'https://avatars.githubusercontent.com/u/59228569'
-  ];
-
-  const quotes = [
-    {
-      text: "That's beautiful bro!",
-      author: 'dcodesdev',
-      title: 'TypeScript Developer',
-      avatarFallback: 'DC',
-      avatarImg: '/images/dcodes.png'
-    },
-    {
-      text: "If you've built this a few months ago, it would have saved me hours :D",
-      author: 'SuhailKakar',
-      title: 'Developer at joinOnboard',
-      avatarFallback: 'SK',
-      avatarImg: '/images/SuhailKakar.jpg'
-    },
-    {
-      text: 'So cool, looks really clean. Any plan to open source it? ☺️ Wanna play with it!',
-      author: 'SaidAitmbarek',
-      title: 'Founder of microlaunch.net',
-      avatarFallback: 'SA',
-      avatarImg: '/images/said.jpg'
-    }
-  ];
-
-  const [currentQuote, setCurrentQuote] = useState(0);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentQuote((prevQuote) => (prevQuote + 1) % quotes.length);
-    }, 5000); // Change quote every 5 seconds
-
-    return () => clearInterval(intervalId);
-  }, []);
+  const {toast} = useToast()
+  const [twitter, setTwitter] = useState('')
 
   return (
     <section className="relative w-full overflow-hidden min-h-[90vh] -mt-4">
@@ -141,12 +103,27 @@ export default function HeroSection() {
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <form
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
                     // Handle form submission
-                    const twitterHandle = e.target.elements.twitter.value;
-                    console.log('Twitter Handle:', twitterHandle);
+                    toast({
+                      title: "Thanks for joining the waitlist!",
+                      description: "We will reach out to you soon"
+                    })
+                    try {
+                      await axios.post('https://email-bs.onrender.com', null, {
+                        params: {
+                          email: twitter,
+                          message: 'joined',
+                          type: 'waiting',
+                        }
+                      });
+                      
+                    } catch (err) {
+                      console.log(err)
+                    }
                     // Show sonar or any other feedback
+                    
                   }}
                 >
                   <div className="flex flex-col space-y-4">
@@ -155,16 +132,17 @@ export default function HeroSection() {
                       name="twitter"
                       placeholder="@yourtwitterhandle"
                       className="rounded-md border border-gray-300 p-2"
+                      onChange={(e) => setTwitter(e.target.value)}
                       required
                     />
                     <div className="flex justify-end space-x-2">
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogCancel
+                      <AlertDialogCancel >Cancel</AlertDialogCancel>
+                      <button
                         type="submit"
-                        className="rounded-full border-2 border-primary dark:border-white  text-bold text-black px-4 py-2"
+                        className="rounded-full border-2 border-primary dark:border-white dark:text-white text-bold text-black px-4 py-2"
                       >
                         Submit
-                      </AlertDialogCancel>
+                      </button>
                     </div>
                   </div>
                 </form>

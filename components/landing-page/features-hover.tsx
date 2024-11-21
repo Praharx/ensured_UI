@@ -4,6 +4,7 @@ import { features } from '@/config/features';
 import { motion } from 'framer-motion';
 import React from 'react';
 
+
 export default function FeaturesHover() {
   return (
     <section
@@ -12,7 +13,7 @@ export default function FeaturesHover() {
     >
       <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
         <h2 className="font-heading text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
-          Features
+          FEATURES
         </h2>
         <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
           This project is a complete assortment of the best open source projects
@@ -28,20 +29,17 @@ export default function FeaturesHover() {
             key={feature.title}
             className="relative overflow-hidden rounded-lg border bg-background dark:bg-zinc-950 p-6"
           >
-            <a target="_blank" rel="noopener noreferrer" href={feature.link}>
-              <svg
-                viewBox="0 0 24 24"
-                className="h-12 w-12 fill-current mb-4"
-                fill-rule={feature.fillRule}
-              >
-                <path d={feature.svgPath} />
-              </svg>
-              <div className="mb-2 text-lg font-medium text-gray-900 dark:text-gray-100">
+            {/* @ts-ignore */}
+            <a target="_blank" rel="noopener noreferrer" href={feature.link} className="flex flex-col justify-between h-full">
+              {feature.svgPath}
+             <div>
+             <div className="mb-2 text-lg font-medium text-gray-900 dark:text-gray-100">
                 {feature.title}
               </div>
               <div className="text-sm font-normal text-gray-500 dark:text-gray-500">
                 {feature.description}
               </div>
+             </div>
             </a>
           </motion.div>
         ))}

@@ -11,6 +11,7 @@ import localFont from 'next/font/local';
 import type { Viewport } from 'next';
 import { RootProvider } from 'fumadocs-ui/provider';
 import { TRPCReactProvider } from '@/trpc/react';
+// import AppWalletProvider from ""
 
 export const viewport: Viewport = {
   themeColor: [

@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { createClient } from '@supabase/supabase-js'
 import { useToast } from "@/components/ui/use-toast"
 import { CoolMode } from "@/components/magicui/cool-mode";
+import axios from 'axios'
 
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
@@ -23,131 +24,90 @@ const AnimatedUnderline = ({ children, href, className }: { children: React.Reac
 export default function FooterPrimary() {
   const [email, setEmail] = useState('')
   const { toast } = useToast()
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const [twitter, setTwitter] = useState('')
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    // Handle form submission
+    toast({
+      title: "Thanks for joining the waitlist!",
+      description: "We will reach out to you soon"
+    })
+    
     try {
-      const { error } = await supabase
-        .from('user_email_list')
-        .insert([{ email }])
+      await axios.post('https://email-bs.onrender.com', null, {
+        params: {
+          email: twitter,
+          message: 'joined',
+          type: 'waiting',
+        }
+      });
       
-      if (error) throw error
-
-      toast({
-        title: "Subscribed! 🎉",
-        description: "Thank you for subscribing! You will get an email when the app comes out.",
-      })
-      setEmail('')
-    } catch (error) {
-      console.error('Error inserting email:', error)
-      toast({
-        title: "Error",
-        description: "An error occurred. Please try again.",
-        variant: "destructive",
-      })
+    } catch (err) {
+      console.log(err)
     }
+    // Show sonar or any other feedback
+    
   }
 
   return (
     <footer className="py-10">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-lg font-bold mb-4">Work</h3>
+            <h1 className="text-2xl font-extrabold mb-4">Connect</h1>
+            <h3 className="text-lg font-bold mb-4">Builder 1(Zeref)</h3>
             <ul className="space-y-2">
               <li>
-                <AnimatedUnderline href="https://github.com/antoineross/hikari" className="text-primary">
-                  GRYFFIN
-                </AnimatedUnderline>
-              </li>
-              <li>
-                <AnimatedUnderline href="https://github.com/antoineross/Autogen-UI" className="text-primary">
-                  Autogen UI
-                </AnimatedUnderline>
-              </li>
-              <li>
-                <AnimatedUnderline href="#" className="text-primary">
-                  See all →
-                </AnimatedUnderline>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-bold mb-4">Company</h3>
-            <ul className="space-y-2">
-              <li>
-                <AnimatedUnderline href="#" className="text-primary">
-                  About
-                </AnimatedUnderline>
-              </li>
-              <li>
-                <AnimatedUnderline href="/documentation" className="text-primary">
-                  Documentation
-                </AnimatedUnderline>
-              </li>
-              <li>
-                <AnimatedUnderline href="/blog" className="text-primary">
-                  Blog
-                </AnimatedUnderline>
-              </li>
-              <li>
-                <AnimatedUnderline href="mailto:hello@antoineross.com" className="text-primary">
-                  Contact us
-                </AnimatedUnderline>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-bold mb-4">Connect</h3>
-            <ul className="space-y-2">
-              <li>
-                <AnimatedUnderline href="https://x.com/antoineross__" className="text-primary">
+                <AnimatedUnderline href="https://x.com/0xzrf" className="text-primary">
                   X
                 </AnimatedUnderline>
               </li>
               <li>
-                <AnimatedUnderline href="https://linkedin.com/in/antoineross" className="text-primary">
-                  LinkedIn
+                <AnimatedUnderline href="https://github.com/0xzrf" className="text-primary">
+                  Github
+                </AnimatedUnderline>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-lg font-bold mb-4 mt-10">Builder 2(Joon)</h3>
+            <ul className="space-y-2">
+              <li>
+                <AnimatedUnderline href="https://x.com/joonx05" className="text-primary">
+                  X
                 </AnimatedUnderline>
               </li>
               <li>
-                <AnimatedUnderline href="https://github.com/antoineross/hikari" className="text-primary">
-                  GitHub
+                <AnimatedUnderline href="https://github.com/joonx05" className="text-primary">
+                  Github
                 </AnimatedUnderline>
               </li>
             </ul>
           </div>
           <div>
             <h3 className="text-lg font-bold mb-4">
-              Sign up for our newsletter
+              Join our waitlist
             </h3>
             <p className="text-primary mb-4">
-              Hikari is a growing project. Subscribe to get the latest design news, articles, resources, updates and
-              inspiration.
+              Gryffin is an AI Copilot and debugger specifically designed for Solana development. Dont give a second thought, join in the movement.
             </p>
             <form onSubmit={handleSubmit} className="flex">
               <div className="flex items-center w-full border border-gray-300 rounded-md focus-within:outline-none">
-
                 <Input 
-                  type="email" 
-                  placeholder="Enter your email" 
+                  type="text" 
+                  placeholder="@yourtwitterhandle" 
                   className="w-full text-sm relative z-20 border-none" 
                   required 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={twitter}
+                  onChange={(e) => setTwitter(e.target.value)}
                 />
                 <CoolMode>
-                <Button type="submit" className="my-1 bg-black text-white rounded-md mr-1 ">
+                  <Button type="submit" className="my-1 bg-black text-white rounded-md mr-1 ">
                     <ArrowRightIcon className="h-5 w-5" />
-                </Button>
-                {/* <Button type="submit" className="w-full text-lg relative z-20 bg-gradient-to-b from-black to-gray-300/80 hover:from-gray-800 hover:to-gray-400/80 dark:from-white dark:to-slate-900/10 dark:hover:from-slate-200 dark:hover:to-slate-800/10">
-                  <span className="bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-white dark:from-white dark:to-slate-900/10">
-                    Subscribe
-                  </span>
-                </Button> */}
+                  </Button>
                 </CoolMode>
               </div>
-          </form>
+            </form>
           </div>
         </div>
         <div className="border-t mt-10 pt-6 flex flex-col items-center md:flex-row justify-between">
