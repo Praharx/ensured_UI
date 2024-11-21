@@ -21,35 +21,40 @@ export default function LogoCloud() {
   return (
     <div>
       <p className="mt-12 text-xs uppercase text-primary text-center font-bold tracking-[0.3em]">
-        Built with these brands
+        GRYFFIN IS BUILT FOR
       </p>
       <div className="grid grid-cols-1 place-items-center justify-center my-12 space-y-4 sm:mt-8 sm:space-y-0 md:mx-auto md:max-w-2xl sm:grid sm:gap-6 sm:grid-cols-5">
         <div className="flex items-center justify-center h-15 w-24">
-          <a href="https://nextjs.org" aria-label="Next.js Link">
-            <NextjsSvg className="size-full" style={{ color: primaryColor }} />
+          <a href=" https://www.anchor-lang.com/" aria-label="Next.js Link" className='flex flex-row items-center justify-center gap-1'> 
+            <img src="/anchor.png" alt="Anchor" className="size-6" />
+            <span className="font-[700] text-2xl">ANCHOR</span>
           </a>
         </div>
         <div className="flex items-center justify-center h-15 w-24">
-          <a href="https://vercel.com" aria-label="Vercel.com Link">
-            <VercelSvg className="size-full" style={{ color: primaryColor }} />
+          <a
+            href="https://github.com/regolith-labs/steel"
+            aria-label="Steel Link"
+          >
+            <span className="font-[700] text-2xl">STEEL</span>
           </a>
         </div>
         <div className="flex items-center justify-center h-12 w-24">
-          <a href="https://stripe.com" aria-label="stripe.com Link">
-            <StripeSvg className="size-full" style={{ color: primaryColor }} />
+          <a href="https://www.seahorse.dev/" aria-label="stripe.com Link">
+          <span className="font-[700] text-2xl">SEAHORSE</span>
           </a>
         </div>
         <div className="flex items-center justify-center h-15 w-24">
-          <a href="https://supabase.io" aria-label="supabase.io Link">
-            <SupabaseSvg
-              className="size-full"
-              style={{ color: primaryColor }}
-            />
+          <a href="https://solana.com/" aria-label="supabase.io Link">
+          <span className="font-[700] text-2xl min-w-[10vw]">Solana native</span>
           </a>
         </div>
         <div className="flex items-center justify-center h-15 w-24">
-          <a href="https://github.com" aria-label="github.com Link">
-            <GithubSvg className="size-full" style={{ color: primaryColor }} />
+          <a
+            href="https://github.com/mithraiclabs/poseidon
+"
+            aria-label="github.com Link"
+          >
+            <span className="font-[700] font-italic">Poseidon</span>
           </a>
         </div>
       </div>

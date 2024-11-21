@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         title: (
           <>
             <CheckCircleIcon className="size-8 transition-transform duration-300 ease-in-out hover:scale-110" />
-            <strong>Insured</strong>
+            <strong>GRYFFIN</strong>
           </>
         ),
         url: '/'

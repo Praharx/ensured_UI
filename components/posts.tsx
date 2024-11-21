@@ -118,15 +118,16 @@ export default function Posts({ user }: PostsProps) {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Post Dashboard</h1>
+      <h1 className="text-3xl font-bold mb-6">Create Policy</h1>
       
       <Card className="mb-8">
         <CardHeader>
-          <CardTitle>{editingPost ? 'Edit Post' : 'Create New Post'}</CardTitle>
+          <CardTitle className='text-xl'>Set in the details of the policy</CardTitle>
         </CardHeader>
         <CardContent>
           <Input
-            placeholder="Post Title"
+
+            placeholder="Post Title of Policy"
             value={editingPost ? editingPost.title : newPost.title}
             onChange={(e) => editingPost 
               ? setEditingPost({...editingPost, title: e.target.value})
@@ -134,8 +135,9 @@ export default function Posts({ user }: PostsProps) {
             }
             className="mb-4"
           />
-          <Textarea
-            placeholder="Post Content"
+          <Input
+            type='number'
+            placeholder="Post Amount of Policy"
             value={editingPost ? editingPost.content || '' : newPost.content}
             onChange={(e) => editingPost
               ? setEditingPost({...editingPost, content: e.target.value})
@@ -146,50 +148,16 @@ export default function Posts({ user }: PostsProps) {
         </CardContent>
         <CardFooter>
           {editingPost ? (
-            <Button onClick={handleUpdatePost}>Update Post</Button>
+            <Button onClick={handleUpdatePost}>Update Policy</Button>
           ) : (
             <Button onClick={handleCreatePost}>
-              <PlusCircle className="mr-2 h-4 w-4" /> Create Post
+              <PlusCircle className="mr-2 h-4 w-4" /> Create Policy
             </Button>
           )}
         </CardFooter>
       </Card>
 
-      {!posts || posts.length === 0 ? (
-      <Card className="text-center p-6">
-        <CardContent>
-          <FileText className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-          <h2 className="text-2xl font-semibold mb-2">No Posts Yet</h2>
-          <p className="text-muted-foreground mb-4">
-            Create your first post to get started!
-          </p>
-          <Button onClick={() => document.querySelector('input')?.focus()}>
-            <PlusCircle className="mr-2 h-4 w-4" /> Create Your First Post
-          </Button>
-        </CardContent>
-      </Card>
-    ) : (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {posts.map(post => (
-          <Card key={post.id}>
-              <CardHeader>
-                <CardTitle>{post.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">{post.content}</p>
-              </CardContent>
-              <CardFooter className="flex justify-between">
-                <Button variant="outline" onClick={() => setEditingPost(post)}>
-                  <Edit className="mr-2 h-4 w-4" /> Edit
-                </Button>
-                <Button variant="destructive" onClick={() => handleDeletePost(post.id)}>
-                  <Trash className="mr-2 h-4 w-4" /> Delete
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      )}
+     
     </div>
   )
 }

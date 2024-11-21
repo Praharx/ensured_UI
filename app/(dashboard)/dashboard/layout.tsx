@@ -15,6 +15,7 @@ import { Settings, User } from 'lucide-react';
 import { Navbar } from '@/components/dashboard-navbar';
 import Sidebar from '@/components/dashboard-sidebar';
 import { redirect } from 'next/navigation';
+// import AppWalletProvider from "@/components/solana/AppWalletProvider";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -29,9 +30,9 @@ export default async function DashboardLayout({
     getUserDetails(supabase),
   ]);
 
-  if (!user) {
-    return redirect('/signin');
-  }
+  // if (!user) {
+  //   return redirect('/signin');
+  // }
 
   // In case you want to get the current pathname in Server.
   // This corresponds to a middleware setting, copy the middleware in root when you use this.
@@ -41,6 +42,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
+      {/* <AppWalletProvider> */}
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
         <Sidebar navConfig={navConfig as NavItem[]} />
         <nav className="mt-auto flex flex-col items-center gap-2 px-2 sm:py-5">
@@ -82,6 +84,7 @@ export default async function DashboardLayout({
           {children}
         </main>
       </div>
+      {/* </AppWalletProvider> */}
     </div>
   );
 }

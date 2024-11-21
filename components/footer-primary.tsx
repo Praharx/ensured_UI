@@ -57,7 +57,7 @@ export default function FooterPrimary() {
             <ul className="space-y-2">
               <li>
                 <AnimatedUnderline href="https://github.com/antoineross/hikari" className="text-primary">
-                  Hikari
+                  GRYFFIN
                 </AnimatedUnderline>
               </li>
               <li>
@@ -153,9 +153,9 @@ export default function FooterPrimary() {
         <div className="border-t mt-10 pt-6 flex flex-col items-center md:flex-row justify-between">
           <div className="flex items-center space-x-2">
             <LogInIcon className="h-6 w-6" />
-            <span className="text-xl font-bold">Hikari.</span>
+            <span className="text-xl font-bold">GRYFFIN.</span>
           </div>
-          <p className="text-gray-500 mt-4 md:mt-0">© Hikari Inc. 2024</p>
+          <p className="text-gray-500 mt-4 md:mt-0">Come join the journey</p>
         </div>
       </div>
     </footer>

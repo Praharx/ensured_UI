@@ -74,7 +74,7 @@ export function ImageUpload({ user }: { user: any }) {
       <span className="text-sm font-medium">Avatar Image</span>
       <div className="ml-1 w-24 h-24 rounded-lg overflow-hidden border-2 border-primary p-0.5">
       <Image 
-        src={imageUrl || avatarUrl || '/default-avatar.png'} 
+        src={imageUrl || avatarUrl || './default-avatar.png'} 
         width={96} 
         height={96} 
         alt="User Avatar" 

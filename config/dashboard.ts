@@ -29,15 +29,13 @@ export const navConfig = [
   { href: '/dashboard', icon: 'Inbox', label: 'Dashboard' },
   // { href: '/dashboard/posts', icon: 'FileText', label: 'Posts' },
   {
-    href: '/dashboard/customer',
+    href: '/dashboard/policies',
     icon: 'Users2',
-    label: 'Customers',
-    disabled: true
+    label: 'Policies',
   },
   {
-    href: '/dashboard/analytics',
+    href: '/dashboard/claim-submission',
     icon: 'LineChart',
-    label: 'Analytics',
-    disabled: true
+    label: 'Claims',
   }
 ];

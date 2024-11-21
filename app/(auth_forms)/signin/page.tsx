@@ -130,6 +130,7 @@ export default function SignIn() {
                     type="submit"
                     className="w-full"
                     loading={isSubmitting}
+                    disabled={provider.name === 'google'} // Disable button if provider is Google
                   >
                     {provider.icon}
                     Sign in with {provider.displayName}
