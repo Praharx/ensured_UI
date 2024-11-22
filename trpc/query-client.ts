@@ -12,8 +12,10 @@ export const createQueryClient = () =>
         // above 0 to avoid refetching immediately on the client
         staleTime: 30 * 1000,
       },
+      // @ts-ignore
       dehydrate: {
         serializeData: SuperJSON.serialize,
+        // @ts-ignore
         shouldDehydrateQuery: (query) =>
           defaultShouldDehydrateQuery(query) ||
           query.state.status === "pending",
