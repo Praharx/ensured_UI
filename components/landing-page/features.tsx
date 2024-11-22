@@ -25,6 +25,7 @@ export default function Features() {
                 className="h-12 w-12 fill-current"
                 fill-rule={feature.fillRule}
               >
+                {/* @ts-ignore */}
                 <path d={feature.svgPath} />
               </svg>
               <div className="space-y-2">
